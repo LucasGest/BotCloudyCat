@@ -6,7 +6,7 @@ Bot Discord du serveur **CloudyCat** ☁️🐱 (ex-« Les Cacahuètes »), en [
 
 - **Accueil** : message de bienvenue et souhaits d'anniversaire.
 - **Économie en 🐾 pattes** : gain en écrivant et en vocal, `/daily`, `/boutique` (couleur de pseudo, rôle perso 7 jours, imposer un agent).
-- **Valorant** : `/lier-riot` (rôle de rang automatique), `/customs` (équipes équilibrées par rang), `/defi-valorant`, `/agent-random`, `/arme-random`, `/crosshair`, `/mes-agents`.
+- **Valorant** : `/lier-riot` (rôle de rang automatique), `/customs` (équipes équilibrées par rang), `/dispos` (disponibilités de l'équipe Premier), `/defi-valorant`, `/agent-random`, `/arme-random`, `/crosshair`, `/mes-agents`.
 - **Activité** : détection des jeux lancés (rôles 🎮 et 🕹️ En jeu, tableau « Qui joue en ce moment ? »), classement vocal de la semaine avec récompenses le dimanche.
 - **Communauté** : `/cherche-mate`, `/sondage`, XP et niveaux (`/rank`, `/leaderboard`), annonces de live Twitch.
 - **Staff** : tickets, modération (`/ban`, `/kick`, `/timeout`, `/unmute`, `/warn`, `/clear`), `/roles-jeux`.
@@ -23,6 +23,7 @@ Bot Discord du serveur **CloudyCat** ☁️🐱 (ex-« Les Cacahuètes »), en [
 | `/classement-vocal` | Classement du temps passé en vocal (semaine, mois, total). |
 | `/crosshair` | Partage ou consulte un code de viseur Valorant. |
 | `/customs` | Session de customs : inscriptions et équipes équilibrées par rang. |
+| `/dispos` | Sondage de disponibilités de l'équipe Premier dans #dispos : chaque joueur coche ses jours, le message liste qui manque. Lancé par l'IGL ou le staff. |
 | `/daily` | Récupère tes pattes du jour (bonus de série). |
 | `/defi-valorant` | 5 défis Valorant au hasard, validés à l'honneur, récompensés en pattes. |
 | `/leaderboard` | Membres les plus actifs. |
