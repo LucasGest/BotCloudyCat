@@ -8,6 +8,12 @@ const BASE_ROLE_ID = '1539944509566357557'; // ・Cloudy
 const BOARD_DELAY_MS = 3_000;
 const ROLE_LIMIT = 230;
 const RESYNC_INTERVAL_MS = 60 * 60 * 1000; // revérification complète toutes les heures
+// Rôles 🎮 des jeux détectés automatiquement : retirés après 2 heures sans
+// jouer au jeu, vérifiés toutes les 2 heures. Les 4 jeux du serveur (boutons
+// de #rôles, utilisés pour les pings) ne sont jamais retirés.
+const GAME_ROLE_PREFIX = '🎮・';
+const GAME_ROLE_IDLE_MS = 2 * 60 * 60 * 1000;
+const GAME_ROLE_CHECK_MS = 2 * 60 * 60 * 1000;
 const MAX_PLAYERS_PER_GAME = 15;
 const BOARD_TITLE = '🎮 Qui joue en ce moment ?';
 
@@ -15,6 +21,10 @@ const BOARD_TITLE = '🎮 Qui joue en ce moment ?';
 // enregistré, la liste repart de ce que Discord envoie au démarrage.
 const playing = new Map();
 const since = new Map(); // « membre|jeu » → début de la partie (ms)
+// « membre|nom du rôle 🎮 » → dernière fois vu en train d'y jouer (ms). En
+// mémoire : après un redémarrage, chacun repart avec 2 heures de répit.
+const lastPlayed = new Map();
+let lastGameRoleCheck = 0;
 let boardTimer = null;
 let resyncTimer = null;
 const pendingRoles = new Map();
@@ -56,6 +66,58 @@ function setPlaying(memberId, presence, names) {
     playing.delete(memberId);
   }
   recordStarts(memberId, presence, names);
+  const now = Date.now();
+  for (const name of names) {
+    lastPlayed.set(`${memberId}|${resolveGame(name).roleName}`, now);
+  }
+}
+
+// Retire les rôles 🎮 automatiques des membres qui n'y ont pas joué depuis
+// 2 heures, puis supprime les rôles devenus vides.
+async function cleanupGameRoles(guild) {
+  const official = new Set(GAMES.map((game) => game.roleName));
+  const now = Date.now();
+  let removed = 0;
+  let deleted = 0;
+
+  for (const role of [...guild.roles.cache.values()]) {
+    if (!role.name.startsWith(GAME_ROLE_PREFIX) || official.has(role.name) || !role.editable) {
+      continue;
+    }
+
+    for (const member of [...role.members.values()]) {
+      const key = `${member.id}|${role.name}`;
+      const stillPlaying = (playing.get(member.id) ?? []).some((name) => resolveGame(name).roleName === role.name);
+      if (stillPlaying) {
+        lastPlayed.set(key, now);
+        continue;
+      }
+      if (!lastPlayed.has(key)) {
+        lastPlayed.set(key, now); // jamais vu jouer depuis le démarrage : 2 heures de répit
+        continue;
+      }
+      if (now - lastPlayed.get(key) >= GAME_ROLE_IDLE_MS) {
+        await member.roles
+          .remove(role, 'Ne joue plus à ce jeu depuis 2 heures')
+          .then(() => {
+            removed += 1;
+            lastPlayed.delete(key);
+          })
+          .catch((error) => logError(`Retrait du rôle ${role.name}`, error));
+      }
+    }
+
+    if (role.members.size === 0) {
+      await role
+        .delete('Plus aucun joueur')
+        .then(() => (deleted += 1))
+        .catch((error) => logError(`Suppression du rôle ${role.name}`, error));
+    }
+  }
+
+  if (removed || deleted) {
+    console.log(`Rôles de jeux : ${removed} retiré(s), ${deleted} rôle(s) supprimé(s).`);
+  }
 }
 
 // Crée le rôle au premier joueur détecté. Deux détections simultanées du même
@@ -105,7 +167,7 @@ async function syncMemberRoles(member, names) {
   const games = new Map(names.map(resolveGame).map((game) => [game.key, game]));
 
   for (const game of games.values()) {
-    // Le rôle 🎮 du jeu reste acquis : on ne le retire pas quand la partie s'arrête.
+    // Le rôle 🎮 du jeu reste pendant la partie et 2 heures après (voir cleanupGameRoles).
     const gameRole = await getOrCreateRole(guild, game.roleName);
     if (gameRole?.editable && !member.roles.cache.has(gameRole.id)) {
       await safeAddRole(member, gameRole, 'Jeu détecté').catch((error) => logError(`Rôle ${game.label}`, error));
@@ -260,6 +322,12 @@ async function resync(client, guildId) {
   }
 
   await cleanupInGameRoles(guild);
+  // La revérification tourne toutes les heures ; le ménage des rôles 🎮,
+  // toutes les 2 heures (le premier passage, au démarrage, ne fait que noter).
+  if (Date.now() - lastGameRoleCheck >= GAME_ROLE_CHECK_MS - 60_000) {
+    lastGameRoleCheck = Date.now();
+    await cleanupGameRoles(guild).catch((error) => logError('Ménage des rôles de jeux', error));
+  }
   await updateBoard(client);
 }
 
@@ -273,4 +341,4 @@ async function startGameActivity(client, guildId) {
   }
 }
 
-module.exports = { handlePresence, startGameActivity, buildBoard, gamesOf, playing };
+module.exports = { handlePresence, startGameActivity, buildBoard, gamesOf, playing, cleanupGameRoles };
