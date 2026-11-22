@@ -8,7 +8,13 @@ const WELCOME_COLOR = 0x8ec5ff; // bleu nuage
 // texte brut plutôt que de planter ou d'afficher une mention cassée.
 function findChannelMention(guild, name) {
   const normalize = (value) => value.normalize('NFC').trim().toLowerCase();
-  const channel = guild.channels.cache.find((c) => normalize(c.name) === normalize(name));
+  // Les salons portent un préfixe décoratif ("📜・règlement") : on accepte
+  // le nom exact ou un nom qui se termine par "・<nom>".
+  const target = normalize(name);
+  const channel = guild.channels.cache.find((c) => {
+    const n = normalize(c.name);
+    return n === target || n.endsWith(`・${target}`);
+  });
   return channel ? `<#${channel.id}>` : `#${name}`;
 }
 
