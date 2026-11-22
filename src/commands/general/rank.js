@@ -1,5 +1,6 @@
 const { SlashCommandBuilder, EmbedBuilder, MessageFlags } = require('discord.js');
 const { getRank, xpForLevel } = require('../../utils/xp');
+const { VIOLET } = require('../../utils/palette');
 
 module.exports = {
   data: new SlashCommandBuilder()
@@ -27,7 +28,7 @@ module.exports = {
     const needed = nextLevelXp - currentLevelXp;
 
     const embed = new EmbedBuilder()
-      .setColor(0x5865f2)
+      .setColor(VIOLET)
       .setTitle(`📈 Niveau de ${targetUser.username}`)
       .addFields(
         { name: 'Niveau', value: `${rank.level}`, inline: true },

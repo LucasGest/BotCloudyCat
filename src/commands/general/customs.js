@@ -10,6 +10,7 @@ const {
 } = require('discord.js');
 const { claimCustomsReward } = require('../../utils/economy');
 const { getCurse, clearCurse } = require('../../utils/agentCurses');
+const { VIOLET } = require('../../utils/palette');
 
 const EVENT_PARTICIPATION_REWARD = 20;
 
@@ -23,7 +24,7 @@ let nextSessionId = 1;
 
 function buildSessionEmbed(session) {
   const embed = new EmbedBuilder()
-    .setColor(0xff4655)
+    .setColor(VIOLET)
     .setTitle('🎮 Customs')
     .setFooter({ text: `Organisé par ${session.organizerName}` })
     .setTimestamp();

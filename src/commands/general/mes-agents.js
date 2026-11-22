@@ -7,6 +7,7 @@ const {
 } = require('discord.js');
 const { getAgents } = require('../../utils/valorantAgents');
 const { getOwnedAgents, setOwnedAgents } = require('../../utils/ownedAgents');
+const { VIOLET } = require('../../utils/palette');
 
 const ROLES = ['Duelliste', 'Initiateur', 'Contrôleur', 'Sentinelle'];
 const EMOJI_ROLE = {
@@ -61,7 +62,7 @@ module.exports = {
       }
 
       const embed = new EmbedBuilder()
-        .setColor(0xff4655)
+        .setColor(VIOLET)
         .setTitle('🎯 Tes agents débloqués')
         .addFields(
           { name: 'Gratuits (toujours disponibles)', value: free.join(', ') || 'Aucun' },

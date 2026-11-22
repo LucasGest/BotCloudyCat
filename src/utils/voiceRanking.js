@@ -2,6 +2,7 @@ const { EmbedBuilder } = require('discord.js');
 const { getDb } = require('./firebase');
 const { addCoins } = require('./economy');
 const { logError } = require('./logger');
+const { VIOLET_CLAIR } = require('./palette');
 
 const COLLECTION = 'voiceStats';
 const META_COLLECTION = 'voiceStatsMeta';
@@ -267,7 +268,7 @@ async function postWeeklyRanking(client) {
 
   const lines = rankingLines(rows).map((line, i) => (i < REWARDS.length ? `${line} · +${REWARDS[i]} 🐾` : line));
   const embed = new EmbedBuilder()
-    .setColor(0xf1c40f)
+    .setColor(VIOLET_CLAIR)
     .setTitle('🎙️ Top vocal de la semaine')
     .setDescription(lines.length ? lines.join('\n') : 'Personne n\'a parlé en vocal cette semaine… 😴')
     .setFooter({ text: 'Compté : à plusieurs, sans sourdine casque · 3 h max par session' })

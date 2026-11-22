@@ -1,5 +1,6 @@
 const { SlashCommandBuilder, EmbedBuilder, MessageFlags } = require('discord.js');
 const { claimDaily } = require('../../utils/economy');
+const { VIOLET_CLAIR } = require('../../utils/palette');
 
 module.exports = {
   data: new SlashCommandBuilder()
@@ -18,7 +19,7 @@ module.exports = {
     }
 
     const embed = new EmbedBuilder()
-      .setColor(0xc8864b)
+      .setColor(VIOLET_CLAIR)
       .setTitle('🐾 Pattes du jour !')
       .setDescription(`Tu gagnes **${result.amount} 🐾**.\nSérie actuelle : 🔥 **${result.streak}** jour(s) de suite.`)
       .setFooter({ text: 'Reviens demain pour faire grossir ta série !' });

@@ -1,5 +1,6 @@
 const { SlashCommandBuilder, EmbedBuilder } = require('discord.js');
 const { PERIODS, getRanking, rankingLines, formatMinutes } = require('../../utils/voiceRanking');
+const { VIOLET_CLAIR } = require('../../utils/palette');
 
 module.exports = {
   data: new SlashCommandBuilder()
@@ -29,7 +30,7 @@ module.exports = {
       : `Ta place : **${myIndex + 1}ᵉ** avec **${formatMinutes(rows[myIndex].minutes)}**`;
 
     const embed = new EmbedBuilder()
-      .setColor(0xf1c40f)
+      .setColor(VIOLET_CLAIR)
       .setTitle(`🎙️ Classement vocal — ${PERIODS[period].label}`)
       .setDescription(`${lines.length ? lines.join('\n') : 'Personne n\'a encore de temps compté.'}\n\n${me}`)
       .setFooter({ text: 'Compté : à plusieurs, sans sourdine casque · Top 3 de la semaine récompensé le dimanche à 21 h' });

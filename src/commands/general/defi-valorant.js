@@ -3,6 +3,7 @@ const { drawChallenges, CHALLENGES, LEVELS } = require('../../utils/valorantChal
 const { claimChallengeReward, CHALLENGE_DAILY_MAX } = require('../../utils/economy');
 const { isStaffMember } = require('../../utils/permissions');
 const { logError } = require('../../utils/logger');
+const { NEUTRE, VIOLET } = require('../../utils/palette');
 
 const DURATION_MS = 3 * 60 * 60 * 1000; // le temps d'une session de jeu
 const ALL_DONE_BONUS = 25;
@@ -19,7 +20,7 @@ function buildEmbed(session) {
   const ended = session.endedReason !== null;
   const players = [...session.players].map((id) => `<@${id}>`).join(', ');
   const embed = new EmbedBuilder()
-    .setColor(ended ? 0x4f545c : 0xff4655)
+    .setColor(ended ? NEUTRE : VIOLET)
     .setTitle('🎯 Défis Valorant')
     .setDescription(
       `**Joueurs (${session.players.size}/${session.max}) :** ${players}\n` +
@@ -84,7 +85,7 @@ function buildComponents(session) {
 
 function buildListEmbed() {
   const embed = new EmbedBuilder()
-    .setColor(0xff4655)
+    .setColor(VIOLET)
     .setTitle(`📜 Les ${CHALLENGES.length} défis Valorant`)
     .setDescription('Chaque `/defi-valorant` en tire 5 au hasard. 👥 = défi de groupe (jamais tiré en solo).');
   for (const [level, info] of Object.entries(LEVELS)) {

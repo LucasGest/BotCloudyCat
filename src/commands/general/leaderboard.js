@@ -1,5 +1,6 @@
 const { SlashCommandBuilder, EmbedBuilder } = require('discord.js');
 const { getLeaderboard } = require('../../utils/xp');
+const { VIOLET_CLAIR } = require('../../utils/palette');
 
 module.exports = {
   data: new SlashCommandBuilder()
@@ -25,7 +26,7 @@ module.exports = {
     );
 
     const embed = new EmbedBuilder()
-      .setColor(0x5865f2)
+      .setColor(VIOLET_CLAIR)
       .setTitle('🏆 Classement des membres actifs')
       .setDescription(lines.join('\n'));
 

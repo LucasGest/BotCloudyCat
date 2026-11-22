@@ -1,7 +1,8 @@
 const { Events, EmbedBuilder } = require('discord.js');
+const { VIOLET } = require('../utils/palette');
 
 const WELCOME_CHANNEL_ID = '1553346771344826468';
-const WELCOME_COLOR = 0x8ec5ff; // bleu nuage
+const WELCOME_COLOR = VIOLET;
 
 // Les salons cités dans le message sont résolus par nom (pas par ID codé en
 // dur) : si le salon n'existe pas (renommé, supprimé...), on retombe sur du

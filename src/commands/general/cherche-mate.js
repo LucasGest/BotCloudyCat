@@ -1,3 +1,4 @@
+const { VIOLET } = require('../../utils/palette');
 const {
   SlashCommandBuilder,
   ModalBuilder,
@@ -75,7 +76,7 @@ module.exports = {
     }
 
     const embed = new EmbedBuilder()
-      .setColor(0x5865f2)
+      .setColor(VIOLET)
       .setTitle('🔎 Recherche de mate')
       .addFields(
         { name: 'Joueur', value: `${interaction.user}`, inline: true },

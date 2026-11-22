@@ -1,5 +1,6 @@
 const { SlashCommandBuilder, EmbedBuilder, MessageFlags } = require('discord.js');
 const { setCrosshair, getCrosshair } = require('../../utils/crosshairs');
+const { VIOLET } = require('../../utils/palette');
 
 module.exports = {
   data: new SlashCommandBuilder()
@@ -45,7 +46,7 @@ module.exports = {
     }
 
     const embed = new EmbedBuilder()
-      .setColor(0xff4655)
+      .setColor(VIOLET)
       .setTitle(`🎯 Viseur de ${target.username}`)
       .setDescription(`\`\`\`${code}\`\`\`\nImporte-le via Réglages > Croix de visée > Importer un profil.`);
 

@@ -1,9 +1,10 @@
 const { EmbedBuilder } = require('discord.js');
 const birthdays = require('./birthdays');
+const { VIOLET_CLAIR } = require('./palette');
 
 const ANNOUNCE_CHANNEL_ID = '1553346904945987695'; // #général
 const CHECK_INTERVAL_MS = 60 * 60 * 1000; // toutes les heures
-const BIRTHDAY_COLOR = 0xff4fa3;
+const BIRTHDAY_COLOR = VIOLET_CLAIR;
 // GIF optionnel affiché dans l'embed : mets une URL directe (ex: Tenor/Giphy
 // "copy link" vers le .gif, pas la page de visionnage) si tu en veux un.
 const CAKE_GIF_URL = null;

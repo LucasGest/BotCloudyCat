@@ -1,5 +1,6 @@
 const { SlashCommandBuilder, EmbedBuilder } = require('discord.js');
 const { getBalance } = require('../../utils/economy');
+const { VIOLET_CLAIR } = require('../../utils/palette');
 
 module.exports = {
   data: new SlashCommandBuilder()
@@ -12,7 +13,7 @@ module.exports = {
     const balance = await getBalance(target.id);
 
     const embed = new EmbedBuilder()
-      .setColor(0xc8864b)
+      .setColor(VIOLET_CLAIR)
       .setDescription(`🐾 **${target.username}** possède **${balance}** patte(s).`);
 
     await interaction.reply({ embeds: [embed] });

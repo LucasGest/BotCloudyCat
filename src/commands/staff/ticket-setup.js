@@ -10,6 +10,7 @@ const {
 const config = require('../../config');
 const { isStaffMember } = require('../../utils/permissions');
 const { findExistingTicket, createTicketChannel, closeTicketChannel } = require('../../utils/tickets');
+const { VIOLET } = require('../../utils/palette');
 
 async function handleOpen(interaction) {
   await interaction.deferReply({ flags: MessageFlags.Ephemeral });
@@ -35,7 +36,7 @@ async function handleOpen(interaction) {
     .setStyle(ButtonStyle.Danger);
 
   const embed = new EmbedBuilder()
-    .setColor(0x5865f2)
+    .setColor(VIOLET)
     .setTitle('🎫 Nouveau ticket')
     .setDescription(`${interaction.user} a ouvert ce ticket. Décris ton problème, le staff va te répondre.`)
     .setTimestamp();
@@ -72,7 +73,7 @@ module.exports = {
     }
 
     const embed = new EmbedBuilder()
-      .setColor(0x5865f2)
+      .setColor(VIOLET)
       .setTitle("🎫 Besoin d'aide ?")
       .setDescription('Clique sur le bouton ci-dessous pour ouvrir un ticket privé avec le staff.');
 

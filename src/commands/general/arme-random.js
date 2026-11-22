@@ -1,5 +1,6 @@
 const { SlashCommandBuilder, EmbedBuilder } = require('discord.js');
 const { getWeapons } = require('../../utils/valorantWeapons');
+const { VIOLET } = require('../../utils/palette');
 
 module.exports = {
   data: new SlashCommandBuilder()
@@ -11,7 +12,7 @@ module.exports = {
     const weapon = weapons[Math.floor(Math.random() * weapons.length)];
 
     const embed = new EmbedBuilder()
-      .setColor(0xff4655)
+      .setColor(VIOLET)
       .setTitle(`🔫 ${weapon.name}`)
       .setDescription(`Catégorie : **${weapon.categorieLabel}**`);
 

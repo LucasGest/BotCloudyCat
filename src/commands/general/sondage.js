@@ -1,4 +1,5 @@
 const { SlashCommandBuilder, EmbedBuilder } = require('discord.js');
+const { VIOLET } = require('../../utils/palette');
 
 const NUMBER_EMOJIS = ['1️⃣', '2️⃣', '3️⃣', '4️⃣', '5️⃣'];
 
@@ -20,7 +21,7 @@ module.exports = {
       .filter(Boolean);
 
     const embed = new EmbedBuilder()
-      .setColor(0x5865f2)
+      .setColor(VIOLET)
       .setTitle(`📊 ${question}`)
       .setDescription(options.map((option, i) => `${NUMBER_EMOJIS[i]} ${option}`).join('\n'))
       .setFooter({ text: `Sondage lancé par ${interaction.user.username}` })

@@ -10,6 +10,7 @@ const {
 const { isStaffMember } = require('../../utils/permissions');
 const { GAMES } = require('../../utils/games');
 const { safeAddRole } = require('../../utils/roleSafety');
+const { VIOLET } = require('../../utils/palette');
 
 const ROLES_CHANNEL_ID = '1567954290012721152'; // #rôles
 
@@ -39,7 +40,7 @@ module.exports = {
     }
 
     const embed = new EmbedBuilder()
-      .setColor(0x5865f2)
+      .setColor(VIOLET)
       .setTitle('🎮 Choisis tes jeux')
       .setDescription('Clique sur un jeu pour recevoir son rôle.\nClique de nouveau pour le retirer.');
 

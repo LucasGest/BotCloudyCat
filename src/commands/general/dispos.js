@@ -9,6 +9,7 @@ const {
 } = require('discord.js');
 const { getDb } = require('../../utils/firebase');
 const { isStaffMember } = require('../../utils/permissions');
+const { VIOLET } = require('../../utils/palette');
 
 // Sondage de disponibilités de l'équipe Premier. Un message par semaine dans
 // #dispos ; chaque joueur coche ses jours dans le menu, le message se met à
@@ -73,7 +74,7 @@ function buildEmbed(poll, playerIds) {
   const waiting = playerIds.filter((id) => !(id in responses)).map((id) => `<@${id}>`);
 
   const embed = new EmbedBuilder()
-    .setColor(0xfd4556)
+    .setColor(VIOLET)
     .setTitle(`Disponibilités Premier · semaine du ${dayDate(poll.monday, 0)}`)
     .setDescription(
       'Choisissez dans le menu les jours où vous pouvez jouer. Vous pouvez modifier votre réponse à tout moment.\n\n' +

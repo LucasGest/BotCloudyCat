@@ -2,6 +2,7 @@ const { ActivityType, EmbedBuilder } = require('discord.js');
 const { GAMES, IN_GAME_PREFIX, normalizeActivityName, resolveGame, inGameRoleName } = require('./games');
 const { logError } = require('./logger');
 const { safeAddRole } = require('./roleSafety');
+const { NEUTRE, VIOLET } = require('./palette');
 
 const ACTIVITY_CHANNEL_ID = '1568628826320142414'; // #activité
 const BASE_ROLE_ID = '1539944509566357557'; // ・Cloudy
@@ -217,7 +218,7 @@ function buildBoard(guild) {
   const sorted = [...byGame.entries()].sort((a, b) => b[1].size - a[1].size || a[0].localeCompare(b[0]));
   const icon = guild?.iconURL?.({ size: 256 }) ?? null;
   const embed = new EmbedBuilder()
-    .setColor(sorted.length ? 0x57f287 : 0x4f545c)
+    .setColor(sorted.length ? VIOLET : NEUTRE)
     .setAuthor({ name: 'CloudyCat · Activité', iconURL: icon ?? undefined })
     .setTitle(BOARD_TITLE)
     .setThumbnail(icon)

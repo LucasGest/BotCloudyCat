@@ -2,6 +2,7 @@ const { EmbedBuilder } = require('discord.js');
 const { getLiveStreams } = require('./twitch');
 const { logError } = require('./logger');
 const config = require('../config');
+const { VIOLET } = require('./palette');
 
 const STREAMERS = ['biskar8', 'lucanemone'];
 const ANNOUNCE_CHANNEL_ID = '1555946540202336286';
@@ -23,7 +24,7 @@ async function announce(client, stream) {
   const thumbnail = stream.thumbnail_url.replace('{width}', '440').replace('{height}', '248');
 
   const embed = new EmbedBuilder()
-    .setColor(0x9146ff)
+    .setColor(VIOLET)
     .setAuthor({ name: `${stream.user_name} est en live sur Twitch !` })
     .setTitle(stream.title || 'Sans titre')
     .setURL(`https://twitch.tv/${stream.user_login}`)

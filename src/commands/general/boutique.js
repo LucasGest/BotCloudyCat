@@ -14,6 +14,7 @@ const { scheduleRoleExpiry } = require('../../utils/customRoles');
 const { safeAddRole } = require('../../utils/roleSafety');
 const { setCurse } = require('../../utils/agentCurses');
 const { getAgents } = require('../../utils/valorantAgents');
+const { VIOLET_CLAIR } = require('../../utils/palette');
 
 const PRICE_COULEUR = 200;
 const PRICE_ROLE_PERSO = 500;
@@ -91,7 +92,7 @@ module.exports = {
   async execute(interaction) {
     const balance = await getBalance(interaction.user.id);
     const embed = new EmbedBuilder()
-      .setColor(0xc8864b)
+      .setColor(VIOLET_CLAIR)
       .setTitle('🐾 Boutique')
       .setDescription(
         `Ton solde : **${balance} 🐾**\n\n` +
