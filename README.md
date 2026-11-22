@@ -8,6 +8,7 @@ Bot Discord du serveur **CloudyCat** ☁️🐱 (ex-« Les Cacahuètes »), en [
 - **Économie en 🐾 pattes** : gain en écrivant et en vocal, `/daily`, `/boutique` (couleur de pseudo, rôle perso 7 jours, imposer un agent).
 - **Valorant** : `/lier-riot` (rôle de rang automatique), `/customs` (équipes équilibrées par rang), `/dispos` (disponibilités de l'équipe Premier), `/defi-valorant`, `/agent-random`, `/arme-random`, `/crosshair`, `/mes-agents`.
 - **Activité** : détection des jeux lancés (rôles 🎮 et 🕹️ En jeu, tableau « Qui joue en ce moment ? »), classement vocal de la semaine avec récompenses le dimanche. Les rôles 🎮 des jeux détectés automatiquement sont retirés après 2 heures sans y jouer (vérification toutes les 2 heures), et supprimés quand ils sont vides ; les 4 jeux du serveur (Valorant, Rocket League, Minecraft, Among Us) restent.
+- **Premier** : rappel des entraînements planifiés sur le site, 2 heures avant le début, dans #entraînements avec un ping du rôle Premier (présents, absents, pas encore répondu).
 - **Communauté** : `/cherche-mate`, `/sondage`, XP et niveaux (`/rank`, `/leaderboard`), annonces de live Twitch.
 - **Staff** : tickets, modération (`/ban`, `/kick`, `/timeout`, `/unmute`, `/warn`, `/clear`), `/roles-jeux`.
 

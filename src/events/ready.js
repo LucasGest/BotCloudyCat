@@ -4,6 +4,7 @@ const { startAgentCacheScheduler } = require('../utils/valorantAgents');
 const { startWeaponCacheScheduler } = require('../utils/valorantWeapons');
 const { startCustomRoleScheduler } = require('../utils/customRoles');
 const { startLiveAnnounceScheduler } = require('../utils/liveAnnounce');
+const { startTrainingReminder } = require('../utils/trainingReminder');
 const { startGameActivity } = require('../utils/gameActivity');
 const { startVoiceRanking } = require('../utils/voiceRanking');
 const { seedVoiceSessions } = require('./voiceStateUpdate');
@@ -21,6 +22,7 @@ module.exports = {
     startWeaponCacheScheduler();
     startCustomRoleScheduler(client);
     startLiveAnnounceScheduler(client);
+    startTrainingReminder(client);
     startGameActivity(client, config.guildId).catch((error) => logError('Détection des jeux (démarrage)', error));
     client.guilds
       .fetch(config.guildId)
