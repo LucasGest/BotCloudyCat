@@ -44,7 +44,9 @@ const clean = (s) => String(s ?? '').replace(/[@#<>`*_~|]/g, '').slice(0, 60);
 
 async function buildMessage(guild, s) {
   const presences = Object.entries(s.presences || {});
-  const oui = presences.filter(([, p]) => p.statut === 'oui').map(([, p]) => clean(p.nom));
+  // « En retard » compte comme présent ; « peut-être » est listé à part.
+  const oui = presences.filter(([, p]) => p.statut === 'oui' || p.statut === 'retard').map(([, p]) => clean(p.nom) + (p.statut === 'retard' ? ' (en retard)' : ''));
+  const peutetre = presences.filter(([, p]) => p.statut === 'peutetre').map(([, p]) => clean(p.nom));
   const non = presences.filter(([, p]) => p.statut === 'non').map(([, p]) => clean(p.nom));
   const answered = new Set(presences.map(([id]) => id));
   const role = guild.roles.cache.get(PREMIER_ROLE_ID);
@@ -52,9 +54,10 @@ async function buildMessage(guild, s) {
 
   const duree = dureeText(s.duree);
   const lines = [
-    `<@&${PREMIER_ROLE_ID}> Rappel : entraînement **${clean(s.type)}** aujourd'hui à ${s.heure.replace(':', 'h')}${duree ? ` (${duree})` : ''}.`,
+    `<@&${PREMIER_ROLE_ID}> Rappel : entraînement **${clean(s.type)}** aujourd'hui à ${s.heure.replace(':', 'h')}${duree ? ` (${duree})` : ''}${s.map ? ` sur ${clean(s.map.charAt(0).toUpperCase() + s.map.slice(1))}` : ''}.`,
     s.notes ? clean(String(s.notes).replace(/\s+/g, ' ')).slice(0, 200) : null,
     `Présents : ${oui.length ? oui.join(', ') : 'personne pour l\'instant'}`,
+    peutetre.length ? `Peut-être : ${peutetre.join(', ')}` : null,
     non.length ? `Absents : ${non.join(', ')}` : null,
     silent.length ? `Pas encore répondu : ${silent.join(', ')}` : null,
     `Indiquez votre présence sur ${SITE_URL}`
